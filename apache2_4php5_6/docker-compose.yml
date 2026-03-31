@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  php-apache:
+    build: .
+    container_name: php-56-apache
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.4.8
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: application_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: saxud3sldnb
+      MYSQL_ROOT_PASSWORD: password
+    restart: always   
