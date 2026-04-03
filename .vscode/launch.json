@@ -10,6 +10,16 @@
         "/var/www/html": "${workspaceFolder}/apache2_4php5_6/src"
       },
       "log": true
+    },
+    {
+      "name": "Listen for Xdebug php 8",
+      "type": "php",
+      "request": "launch",
+      "port": 9003,
+      "pathMappings": {
+        "/var/www/html": "${workspaceFolder}/nginxphp8/src"
+      },
+      "log": true
     }
   ]
 }
