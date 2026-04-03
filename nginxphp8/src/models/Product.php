@@ -41,6 +41,19 @@ class Product {
         return mysqli_query($this->conn, $sql);
     }
 
+    public function search($title) {
+        $title = mysqli_real_escape_string($this->conn, $title);
+        $sql = "SELECT * FROM products WHERE title LIKE '%$title%'";
+        $result = mysqli_query($this->conn, $sql);
+        $products = [];
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $products[] = $row;
+        }
+
+        return $products;
+    }
+
     public function __destruct() {
         if ($this->conn) {
             mysqli_close($this->conn);

@@ -3,6 +3,7 @@
 require_once __DIR__ . '/models/Product.php';
 require_once __DIR__ . '/views/products_table.php';
 require_once __DIR__ . '/views/add_product_form.php';
+require_once __DIR__ . '/views/search_form.php';
 
 // Initialize product model
 $productModel = new Product();
@@ -10,6 +11,8 @@ $productModel = new Product();
 // Handle form submissions
 $message = '';
 $messageType = '';
+$searchResults = null;
+$searchPerformed = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle delete
@@ -33,10 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $messageType = 'error';
         }
     }
+} elseif (isset($_GET['search'])) {
+    // Handle search
+    $searchResults = $productModel->search($_GET['search']);
+    $searchPerformed = true;
 }
 
-// Get all products
-$products = $productModel->getAll();
+// Get all products if no search was performed
+if (!$searchPerformed) {
+    $products = $productModel->getAll();
+} else {
+    $products = $searchResults;
+}
 
 // Display messages
 if ($message) {
@@ -44,5 +55,6 @@ if ($message) {
 }
 
 // Display views
+displaySearchForm();
 displayProductsTable($products);
 displayAddProductForm();
