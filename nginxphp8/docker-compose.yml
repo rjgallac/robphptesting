@@ -13,12 +13,17 @@ services:
     build: ./docker/php
     volumes:
       - ./src:/var/www/html
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
   database_robtesting:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: deniseforum
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - '3306:3306'
